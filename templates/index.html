@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Today's Tasks{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 24px;">
+    <h2 style="margin-bottom: 16px;">Today's Tasks</h2>
+    <a href="{{ url_for('add_task') }}" class="btn" style="width: auto; display: inline-block; padding: 10px 20px;">+ Add New Task</a>
+</div>
+
+{% if tasks %}
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+        {% for task in tasks %}
+            <div style="background: white; padding: 16px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                    {% if task.completed %}
+                        <span style="color: #34C759; font-size: 24px;">✓</span>
+                    {% else %}
+                        <span style="color: #FF3B30; font-size: 24px;">○</span>
+                    {% endif %}
+                    
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 18px; {% if task.completed %}text-decoration: line-through; color: #999;{% endif %}">
+                            {{ task.title }}
+                        </h3>
+                        <p style="color: #666; font-size: 14px;">
+                            🕐 {{ task.task_time }}
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 8px;">
+                    {% if not task.completed %}
+                        <a href="{{ url_for('complete_task', task_id=task.id) }}" 
+                           style="background: #34C759; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 14px;">
+                            Done
+                        </a>
+                    {% endif %}
+                    
+                    <a href="{{ url_for('delete_task', task_id=task.id) }}" 
+                       style="background: #FF3B30; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 14px;"
+                       onclick="return confirm('Delete this task?')">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div style="text-align: center; padding: 48px 0; color: #999;">
+        <p style="font-size: 48px; margin-bottom: 16px;">📋</p>
+        <p>No tasks for today. Add one to get started!</p>
+    </div>
+{% endif %}
+{% endblock %}
