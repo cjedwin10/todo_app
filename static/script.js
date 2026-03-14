@@ -1,4 +1,4 @@
-// Notification handling for Todo App - DEBUG VERSION
+// Notification handling for Todo App
 
 console.log('📱 Notification script loaded');
 
