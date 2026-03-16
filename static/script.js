@@ -254,7 +254,7 @@ function sendTaskResponse(taskId, response) {
             }
         }
     })
-    .catch(error => console.error('❌ Error sending response:', error));
+    .catch(error => console.error(' Error sending response:', error));
 }
 
 // Show in-app notification
